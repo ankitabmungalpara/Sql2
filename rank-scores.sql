@@ -8,9 +8,33 @@ Return the result table ordered by score in descending order.
 
 The result format is in the following example.
 
+Input: 
+Scores table:
++----+-------+
+| id | score |
++----+-------+
+| 1  | 3.50  |
+| 2  | 3.65  |
+| 3  | 4.00  |
+| 4  | 3.85  |
+| 5  | 4.00  |
+| 6  | 3.65  |
++----+-------+
+    
+Output: 
++-------+------+
+| score | rank |
++-------+------+
+| 4.00  | 1    |
+| 4.00  | 1    |
+| 3.85  | 2    |
+| 3.65  | 3    |
+| 3.65  | 3    |
+| 3.50  | 4    |
++-------+------+
 """
 
-- method 1 : using WINDOW function
+# method 1 : using WINDOW function
 select 
     score, dense_rank() over(order by score desc) as 'rank'
 from 
@@ -18,7 +42,7 @@ from
 order by score desc;
 
 
-- method 2 : using subquery
+# method 2 : using subquery
 select 
     s1.score,
     (
